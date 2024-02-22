@@ -10,6 +10,9 @@ def index():
         # Faça o que desejar com os dados, por exemplo, imprimir no console
         print(f'E-mail recebido: {email}')
 
+        # variavel responsavel por impedir que a rota "/success" seja acessada externamente.
+        session['valid'] = True 
+
         # Pode redirecionar para outra rota, por exemplo, 'success'
         return redirect('/success')
 
@@ -19,10 +22,12 @@ def index():
 
 @app.route('/success')
 def success():
+    if session.get('valid'):
         return render_template('success.html')
 
+    return redirect('/')
 
-
+# Caso a rota solicitada não exista redireciona para a pagina inicial.
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template("error_404.html")
+    return redirect('/')
