@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, jsonify
 from core import app
 
 @app.route('/', methods=['GET', 'POST'])
@@ -16,7 +16,13 @@ def index():
     # Se o método for GET ou o formulário ainda não foi enviado, renderiza o template padrão
     return render_template('index.html')
 
+
 @app.route('/success')
 def success():
         return render_template('success.html')
 
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("error_404.html")
