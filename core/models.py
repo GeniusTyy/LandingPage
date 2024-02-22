@@ -37,7 +37,18 @@ class DataBase:
             print("Tabela criada com sucesso.")
         except sqlite3.Error as e:
             print(f"Erro ao criar a tabela: {e}")
+
+
+    def _append(self, email:str):
+        # TODO: Efetuar Tratamento de ERROS.
+        self.cursor.execute("INSERT INTO Data (email)", (email,))
+        self.conn.commit()
             
+    
+    def _get_all():
+        self.cursor.execute("FROM DATA SELECT *")
+        data = self.cursor.fetchall()
+        return data
 
 # Quando este script é executado diretamente
 if __name__ == '__main__':

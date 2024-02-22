@@ -9,4 +9,5 @@ PATH_DB = os.path.join(PATH, 'DataBase.db')
 if not os.path.exists(PATH):
     os.makedirs(PATH)
 
-
+with DataBase(PATH_DB) as db:
+    db._create_table()
