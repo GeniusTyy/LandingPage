@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import render_template, request, redirect, session, jsonify
-from core import app, models, PATH_DB
+from core import app, models, envia_email, PATH_DB
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -10,6 +10,11 @@ def index():
 
         currente_time = datetime.now().strftime("%d-%m-%Y")
         adiciona_email(email, currente_time)        
+        
+        # TODO: Resolver a lentidão.
+        with envia_email.SendMail() as sender:
+            if sender:
+                sender.send_mail(email, 'Este é um teste de envio de e-mail usando Flask-Mail.')
 
         # variavel responsavel por impedir que a rota "/success" seja acessada externamente.
         session['valid'] = True 
@@ -24,6 +29,7 @@ def index():
 def adiciona_email(email:str, data:str):
     with models.DataBase(PATH_DB) as db:
         db._append(email, data)
+
 
 @app.route('/success')
 def success():
