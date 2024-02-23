@@ -32,6 +32,7 @@ def success():
 
     return redirect('/')
 
+# TODO: Restringir essa aberração.
 @app.route('/data')
 def data():
     response = {"data": {"users": []}}
