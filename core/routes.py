@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import render_template, request, redirect, session, jsonify
 from core import app, models, PATH_DB
 
@@ -7,7 +8,8 @@ def index():
         # Captura os dados do formulário
         email = request.form.get('email')
 
-        adiciona_email(email)        
+        currente_time = datetime.now().strftime("%d-%m-%Y")
+        adiciona_email(email, currente_time)        
 
         # variavel responsavel por impedir que a rota "/success" seja acessada externamente.
         session['valid'] = True 
@@ -19,26 +21,34 @@ def index():
     return render_template('index.html')
 
 # Função para adicionar o e-mail no banco de dados.
-def adiciona_email(email:str):
+def adiciona_email(email:str, data:str):
     with models.DataBase(PATH_DB) as db:
-        db._append(email)
+        db._append(email, data)
 
 @app.route('/success')
 def success():
-    if session.get('valid'):
+    if session.get('valid') == True:
         return render_template('success.html')
 
     return redirect('/')
 
 @app.route('/data')
 def data():
-    response = {}
-    with DataBase(PATH_DB) as db:
-        cache = db._get_all()
-        if cache:
-            for id, email in cache:
-                response["data"][id] = email
-        return jsonify(response)
+    response = {"data": {"users": []}}
+
+    with models.DataBase(PATH_DB) as db:
+        usuarios = db._get_all()
+
+        for id, email, data in usuarios:
+            user = {
+                "id": id,
+                "email":email,
+                "data":data
+            }
+            
+            response['data']['users'].append(user)
+
+    return jsonify(response)
 
 # Caso a rota solicitada não exista redireciona para a pagina inicial.
 @app.errorhandler(404)

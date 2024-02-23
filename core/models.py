@@ -30,23 +30,23 @@ class DataBase:
             self.cursor.execute("""
                 CREATE TABLE IF NOT EXISTS Data (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    email VARCHAR(255) NOT NULL
+                    email VARCHAR(255) NOT NULL,
+                    registration_date DATE NOT NULL
                 )
             """)
             self.conn.commit()
-            print("Tabela criada com sucesso.")
         except sqlite3.Error as e:
             print(f"Erro ao criar a tabela: {e}")
 
 
-    def _append(self, email:str):
+    def _append(self, email:str, date:str):
         # TODO: Efetuar Tratamento de ERROS.
-        self.cursor.execute("INSERT INTO Data (email)", (email,))
+        self.cursor.execute("INSERT INTO Data (email, registration_date) VALUES(?, ?)", (email, date))
         self.conn.commit()
             
     
-    def _get_all():
-        self.cursor.execute("FROM DATA SELECT *")
+    def _get_all(self):
+        self.cursor.execute("SELECT * FROM Data")
         data = self.cursor.fetchall()
         return data
 
