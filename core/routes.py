@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 from flask import render_template, request, redirect, session, jsonify
 from core import app, models, PATH_DB

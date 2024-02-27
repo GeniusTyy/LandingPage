@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import sqlite3
 
 # Uma classe Singleton para garantir que ela seja instanciada apenas uma vez!
