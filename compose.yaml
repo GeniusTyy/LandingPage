@@ -1,0 +1,21 @@
+services:
+
+  database:
+  
+    image: "postgres:16.0-alpine3.18"
+    environment:
+      POSTGRES_PASSWORD: "admin"
+    ports:
+      - "5432:5432" 
+
+  web:
+
+    build: .
+    volumes: 
+      - .:/app
+    network_mode: host
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    
