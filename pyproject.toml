@@ -11,11 +11,14 @@ python = "^3.11"
 flask = "^3.0.2"
 python-dotenv = "^1.0.1"
 psycopg2 = "^2.9.9"
+gunicorn = "^21.2.0"
+sqlalchemy = "^2.0.28"
 
 
 [tool.poetry.group.dev.dependencies]
 black = "^24.2.0"
 httpie = "^3.2.2"
+ipykernel = "^6.29.3"
 
 [build-system]
 requires = ["poetry-core"]
