@@ -1,4 +1,4 @@
-from api import create_app
+from landpage import create_app
 
 app = create_app()
 
