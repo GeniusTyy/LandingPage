@@ -1,6 +1,7 @@
 from flask import Blueprint, redirect, render_template, request
-from infra.database import query
 from datetime import datetime
+
+from infra.database import get_db
 
 web = Blueprint("web", __name__)
 
@@ -11,7 +12,13 @@ def home():
         email = request.form.get("email")
         date = datetime.now().strftime("%d/%m/%Y")
 
-        # TODO: implementar a função para salvar no banco de dados
+        # Inicia uma instacia do banco de dados..
+        db = get_db()
+
+        # Insere o valor no banco.
+        db.cursor().execute(
+            "INSERT INTO local (email, data) VALUES(%s, %s)", (email, date)
+        )
 
         return redirect("/")
 

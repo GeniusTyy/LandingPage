@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS local;
+DROP TABLE IF EXISTS local_data;
+
+CREATE TABLE IF NOT EXISTS local (
+    id SERIAL PRIMARY KEY,
+    email TEXT NOT NULL,
+    data DATE NOT NULL
+)
