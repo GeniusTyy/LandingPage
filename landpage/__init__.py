@@ -9,12 +9,17 @@ from config import (
     POSTGRES_HOST,
     POSTGRES_PORT,
     POSTGRES_DB,
+    EMAIL_USER,
+    EMAIL_PASSWORD,
+    EMAIL_SMTP_HOST,
+    EMAIL_SMTP_PORT,
 )
 from infra.database import create_db_connection, init_db_command
 
 
 def create_app():
     app = Flask(__name__)
+    app.secret_key = "development"
     app.register_blueprint(api)
     app.register_blueprint(web)
 
@@ -26,6 +31,11 @@ def create_app():
         "host": POSTGRES_HOST,
         "dbname": POSTGRES_DB,
     }
+
+    app.config["EMAIL_USER"] = EMAIL_USER
+    app.config["EMAIL_PASSWORD"] = EMAIL_PASSWORD
+    app.config["EMAIL_SMTP_HOST"] = EMAIL_SMTP_HOST
+    app.config["EMAIL_SMTP_PORT"] = EMAIL_SMTP_PORT
 
     # Inicializa a conexão do banco de dados
     create_db_connection(app)
