@@ -1,13 +1,10 @@
 import os
 from dotenv import load_dotenv
 
-# Carregar as variáveis de ambiente do arquivo padrão (.env)
-load_dotenv()
+flask_env = os.getenv("FLASK_ENV", "development")
 
-# Verificar se o ambiente está definido como "development" e carregar o arquivo específico
-if os.getenv("ENVIRONMENT") == "development":
-    load_dotenv(dotenv_path=".env.development")
-
+dotenv_path = ".env.production" if flask_env == "production" else ".env.development"
+load_dotenv(dotenv_path)
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
@@ -21,3 +18,5 @@ EMAIL_HTTP_HOST = os.getenv("EMAIL_HTTP_HOST")
 EMAIL_HTTP_PORT = os.getenv("EMAIL_HTTP_PORT")
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+
+print(f"Using {dotenv_path}")

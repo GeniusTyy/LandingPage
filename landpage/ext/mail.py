@@ -2,7 +2,6 @@ import smtplib
 from email.mime.text import MIMEText
 from flask import current_app
 
-
 # Configurações do email
 
 
@@ -12,7 +11,7 @@ def send_mail(target):
     # Configurações para o servidor SMTP do Mailcatcher
     smtp_server = current_app.config["EMAIL_SMTP_HOST"]
     smtp_port = current_app.config["EMAIL_SMTP_PORT"]
-    smtp_user = current_app.config["EMAIL_USER"]
+    smtp_user = current_app.config.get("EMAIL_USER", "teste@teste.com")
     smtp_password = current_app.config["EMAIL_PASSWORD"]
 
     sender_email = smtp_user
@@ -85,10 +84,21 @@ def send_mail(target):
     try:
         # Conexão e envio do email
         with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(smtp_user, smtp_password)
+            if not smtp_user == "None" and not smtp_password == "None":
+                print("Passei aqui")
+                print(smtp_user)
+                print(smtp_port)
+                print(smtp_server)
+                print(smtp_password)
+
+                server.starttls()
+                server.login(smtp_user, smtp_password)
+
             server.sendmail(sender_email, [receiver_email], msg.as_string())
             print("Email enviado com sucesso!")
 
     except Exception as err:
         print(f"Erro ao enviar Email: {err}")
+
+    finally:
+        server.close()

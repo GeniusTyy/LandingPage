@@ -22,15 +22,15 @@ def home():
 
         try:
             # Inicia uma instacia do banco de dados..
-            db = get_db()
-            with db.cursor() as db:
-                db.execute(
-                    "INSERT INTO local (email, data) VALUES(%s, %s)", (email, date)
-                )
+            #db = get_db()
+            #with db.cursor() as db:
+            #    db.execute(
+            #        "INSERT INTO local (email, data) VALUES(%s, %s)", (email, date)
+            #    )
             send_mail(email)
 
         except Exception as err:
-            print("Erro ao processar a solicitação")
+            print(f"Erro ao processar a solicitação {err}")
 
         return redirect("/")
 
