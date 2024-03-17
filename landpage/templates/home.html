@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Adicionando CSS para as notificações -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 <body>
     <div id="form-container" class="animate__animated animate__jackInTheBox ">
@@ -16,5 +18,47 @@
         </form>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        // Adicionando notificação usando Toastify
+                        Toastify({
+                            text: "{{ message }}",
+                            // Definindo a cor de fundo com base na categoria da mensagem
+                            
+                            backgroundColor: "{% if category == 'error' %}linear-gradient(to right, #ff416c, #ff4b2b){% else %}linear-gradient(to right, #4CAF50, #45a049){% endif %}",
+                            duration: 3000 // Duração da notificação em milissegundos
+                        }).showToast(); // Mostrar a notificação
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+    
+            // A lógica do formulário e a função isValidEmail() permanecem inalteradas
+            var form = document.getElementById('subscribe-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Evitar envio do formulário
+    
+                var email = document.getElementById('email').value;
+
+                // Simulação de envio bem-sucedido
+                Toastify({
+                    text: "Inscrição realizada com sucesso!",
+                    backgroundColor: "linear-gradient(to right, #4CAF50, #45a049)",
+                    duration: 3000
+                }).showToast();
+            });
+    
+            // Função para validar o e-mail permanece inalterada
+            function isValidEmail(email) {
+                // Implemente sua lógica de validação de e-mail aqui
+                // Esta é uma validação simples apenas para fins de exemplo
+                return /\S+@\S+\.\S+/.test(email);
+            }
+        });
+    </script>
+    
 </body>
 </html>

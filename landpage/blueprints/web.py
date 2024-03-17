@@ -13,7 +13,6 @@ from landpage.ext.mail import send_mail
 
 web = Blueprint("web", __name__)
 
-
 @web.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -21,17 +20,22 @@ def home():
         date = datetime.now().strftime("%d/%m/%Y")
 
         try:
-            # Inicia uma instacia do banco de dados..
-            #db = get_db()
-            #with db.cursor() as db:
-            #    db.execute(
-            #        "INSERT INTO local (email, data) VALUES(%s, %s)", (email, date)
-            #    )
+            db = get_db()
+            with db.cursor() as db:
+                db.execute(
+                    "INSERT INTO local (email, data) VALUES (%s, TO_DATE(%s, 'DD/MM/YYYY'))",
+                    (email, date)
+                )
             send_mail(email)
+            # Commit changes to database
+            flash("Inscrição realizada com Sucesso!", "sucess")
 
         except Exception as err:
             print(f"Erro ao processar a solicitação {err}")
+            flash("Ocorreu um erro ao processar sua solicitação. Por favor, tente novamente mais tarde.", "error")
+            
+        finally:
+            return render_template("home.html", message=get_flashed_messages(with_categories=True)), 200
+    print(get_flashed_messages(with_categories=True))
 
-        return redirect("/")
-
-    return render_template("home.html", message="Hello world"), 200
+    return render_template("home.html", message=get_flashed_messages(with_categories=True)), 200
