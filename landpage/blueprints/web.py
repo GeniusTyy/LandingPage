@@ -20,6 +20,8 @@ def home():
         date = datetime.now().strftime("%d/%m/%Y")
 
         try:
+            if "@" not in email:
+                raise ValueError("Email invalido")
             db = get_db()
             with db.cursor() as db:
                 db.execute(
@@ -36,6 +38,7 @@ def home():
             
         finally:
             return render_template("home.html", message=get_flashed_messages(with_categories=True)), 200
+
     print(get_flashed_messages(with_categories=True))
 
     return render_template("home.html", message=get_flashed_messages(with_categories=True)), 200
