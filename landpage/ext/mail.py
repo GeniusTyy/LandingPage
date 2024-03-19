@@ -99,6 +99,3 @@ def send_mail(target):
 
     except Exception as err:
         return False
-
-    finally:
-        server.close()
