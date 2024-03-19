@@ -1,7 +1,6 @@
 # create_app.py
 
 from flask import Flask
-from .blueprints.api import api
 from .blueprints.web import web
 from config import (
     POSTGRES_USER,
@@ -20,7 +19,6 @@ from infra.database import create_db_connection, init_db_command
 def create_app():
     app = Flask(__name__)
     app.secret_key = "development"
-    app.register_blueprint(api)
     app.register_blueprint(web)
 
     # Configurações do banco de dados

@@ -1,12 +1,18 @@
 import smtplib
 from email.mime.text import MIMEText
 from flask import current_app
+import re
 
 # Configurações do email
 
 
 # TODO: Mudar para o Mailcatcher de forma dinamica
 def send_mail(target):
+
+    valid_format = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
+    if not re.match(valid_format, target):
+        return False
 
     # Configurações para o servidor SMTP do Mailcatcher
     smtp_server = current_app.config["EMAIL_SMTP_HOST"]
@@ -85,20 +91,14 @@ def send_mail(target):
         # Conexão e envio do email
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             if not smtp_user == "None" and not smtp_password == "None":
-                print("Passei aqui")
-                print(smtp_user)
-                print(smtp_port)
-                print(smtp_server)
-                print(smtp_password)
-
                 server.starttls()
                 server.login(smtp_user, smtp_password)
 
             server.sendmail(sender_email, [receiver_email], msg.as_string())
-            print("Email enviado com sucesso!")
+            return True
 
     except Exception as err:
-        print(f"Erro ao enviar Email: {err}")
+        return False
 
     finally:
         server.close()
