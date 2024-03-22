@@ -10,7 +10,7 @@ bp = Blueprint('webui', __name__, static_folder='static', template_folder='templ
 
 
 # Adiciona uma regra de URL para a rota raiz ("/") que renderiza a função 'home'
-bp.add_url_rule("/", view_func=home)
+bp.add_url_rule("/", view_func=home, methods=['GET', 'POST'])
 
 
 # Define uma função para inicializar o blueprint 'webui' com a aplicação Flask
