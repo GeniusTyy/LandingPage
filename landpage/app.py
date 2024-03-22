@@ -6,7 +6,7 @@ from landpage.ext import configuration
 
 
 def minimal_app(**config):
-    app = Flask(__name__, static_url_path="/static")
+    app = Flask(__name__)
 
     configuration.init_app(app, **config)
     return app

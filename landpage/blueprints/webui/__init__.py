@@ -4,8 +4,10 @@ from flask import Blueprint
 # Importa a função 'home' do módulo views
 from landpage.blueprints.webui.views import home
 
+# TODO: Corrigir o problema de importação relacionado ao static.
 # Cria um objeto Blueprint com o nome 'webui'
-bp = Blueprint("webui", __name__, template_folder="templates", static_folder="static")
+bp = Blueprint('webui', __name__, static_folder='static', template_folder='templates')
+
 
 # Adiciona uma regra de URL para a rota raiz ("/") que renderiza a função 'home'
 bp.add_url_rule("/", view_func=home)
