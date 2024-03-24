@@ -4,4 +4,5 @@ TITLE = "Landpage"
 SECRET_KEY = "jadkfbsdkjbfbh"
 EXTENSIONS = [
     "landpage.blueprints.webui:init_app",
+    "landpage.ext.database:init_app"
 ]
