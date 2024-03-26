@@ -1,1 +1,1 @@
-
+# Modulo responsavel pelas extensão de terceiros.

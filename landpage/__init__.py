@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # create_app.py
 
 from flask import Flask
@@ -42,3 +44,4 @@ def create_app():
     app.cli.add_command(init_db_command)
 
     return app
+>>>>>>> main

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Adicionando CSS para as notificações -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+    <style>
+        body {
+            background-color: #0f0f0f;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #form-container {
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            outline: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container" class="animate__animated animate__jackInTheBox ">
+        <h1>Fique Atualizado &#x1F4EA;</h1>
+        <form action="#" method="post">
+            <input type="email" name="email" placeholder="Digite seu e-mail" required>
+            <br>
+            <input type="submit" value="Inscrever-se">
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        // Adicionando notificação usando Toastify
+                        Toastify({
+                            text: "{{ message }}",
+                            // Definindo a cor de fundo com base na categoria da mensagem
+                            
+                            backgroundColor: "{% if category == 'error' %}linear-gradient(to right, #ff416c, #ff4b2b){% else %}linear-gradient(to right, #4CAF50, #45a049){% endif %}",
+                            duration: 3000 // Duração da notificação em milissegundos
+                        }).showToast(); // Mostrar a notificação
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+    
+            // A lógica do formulário e a função isValidEmail() permanecem inalteradas
+            var form = document.getElementById('subscribe-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Evitar envio do formulário
+    
+                var email = document.getElementById('email').value;
+
+                // Simulação de envio bem-sucedido
+                Toastify({
+                    text: "Inscrição realizada com sucesso!",
+                    backgroundColor: "linear-gradient(to right, #4CAF50, #45a049)",
+                    duration: 3000
+                }).showToast();
+            });
+    
+            // Função para validar o e-mail permanece inalterada
+            function isValidEmail(email) {
+                // Implemente sua lógica de validação de e-mail aqui
+                // Esta é uma validação simples apenas para fins de exemplo
+                return /\S+@\S+\.\S+/.test(email);
+            }
+        });
+    </script>
+    
+</body>
+</html>
