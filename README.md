@@ -1,64 +1,38 @@
 # Simple Email Collection Landing Page with Python and Flask
 
-## Overview
+![Exemplo de imagem](.github/png/home.png)
 
-This repository contains a simple landing page developed using Python and Flask for the purpose of collecting email addresses. The project is designed to be a straightforward solution for creating a sign-up form and storing collected email data in a database.
 
-## Features
+## Instalação: 
+```code
+python -m venv venv
+make install
+```
 
-- **User-Friendly Interface**: The landing page provides a clean and user-friendly interface for visitors to submit their email addresses.
-- **Data Storage**: Collected email addresses are stored securely in a database for future reference.
-- **Easy Integration**: The project is built with Flask, making it easy to integrate with other Flask applications or deploy on various platforms.
 
-## Prerequisites
+## Para rodar o projeto use:
+```code
+# Subindo os containers do postgres e mailcatcher
+cd infra/
+docker compose up -d
+cd ..
 
-Before running the application, ensure that you have the following installed:
+# Crie as tabelas do banco com
+flask init-db
 
-- Python (version 3.6 or higher)
-- Flask (install using `pip install flask`)
-- SQLite (for the default database; can be customized to other databases)
+gunicorn --config gunicorn_config.py app:app
+```
 
-## Setup and Run
+## Rotas:
 
-1. Clone the repository to your local machine:
+O aplicativo poderá ser acessado atraves da porta 8000 caso rode com o Gunicorn:
+> Gunicorn: http://localhost:8000
 
-    ```bash
-    git clone https://github.com/seu-usuario/nome-do-repositorio.git
-    ```
+> Caso use o servidor integrado ao flask: http://localhost:5000
 
-2. Navigate to the project directory:
 
-    ```bash
-    LandingPage
-    ```
+### Mailcathcer:
 
-3. Install the required dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Run the Flask application:
-
-    ```bash
-    python app.py
-    ```
-
-5. Open your web browser and visit [http://localhost:5000](http://localhost:5000) to access the landing page.
-
-## Configuration
-
-- The default configuration uses SQLite for data storage. You can customize the database configuration in the `config.py` file.
-- Modify the HTML templates in the `templates` directory to match your branding and design preferences.
-
-## Contributing
-
-Feel free to contribute to the project by submitting bug reports, feature requests, or pull requests. Your feedback and contributions are highly appreciated.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-**Note**: Update the placeholders such as `seu-usuario` e `nome-do-repositorio` with your GitHub username and repository name.
+Caso deseje você poderá acessar as os emails em ambiente de teste usando o emaicatcher.
+> Caixa de Entrada: http://localhost:1080
+![Exemplo de imagem](.github/png/email.png)
